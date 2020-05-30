@@ -66,8 +66,6 @@ def extract_noise():
 
 
 def train_model(X, y):
-   #ideally shuffle data here, but only one classifier so it is okay
-
    model = RandomForestClassifier(n_estimators=20)
    cross_val_scores = cross_val_score(model, X, y, cv = 3)
    print(cross_val_scores)
@@ -75,14 +73,18 @@ def train_model(X, y):
    model.fit(X, y)
    return model
 
+#given a set of features, return a prediction
+def predict(features):
+    return trained_model.predict(features)
 
-
-if __name__ == '__main__':
+trained_model = RandomForestClassifier()
+#Extract features and return a trained model
+def train():
     print('Entering training.....')
     #extract features from two csv files
     total_features_pos, y_pos = extract_features('training_set.csv')
     total_features_neg, y_neg = extract_noise()
-    
+
     #combine data
     y = np.append(y_pos, y_neg)
     X = np.vstack((total_features_pos, total_features_neg))
@@ -104,7 +106,8 @@ if __name__ == '__main__':
     #Predice on model
     predictions = trained_model.predict(cv_x)
     print(confusion_matrix(cv_y, predictions))
-
+    
+    return trained_model
 
 
 
