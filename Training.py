@@ -12,7 +12,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
-left_movement = np.genfromtxt('truthPositives.csv', delimiter=',')
 noise = np.genfromtxt('randomNoise.csv', delimiter = ',')
 #xyz -> 0 1 2
 #peaks,_ = sig.find_peaks(left_movement[:,1], height = 7.5)
@@ -25,7 +24,8 @@ noise = np.genfromtxt('randomNoise.csv', delimiter = ',')
 
 total_features = []
 
-def extract_features():
+def extract_features(file_name):
+    left_movement = np.genfromtxt(file_name, delimiter=',')
     total_features = []
     print('Extracting features')
     peaks,_ = sig.find_peaks(left_movement[:,1], height = 7.5)
@@ -79,8 +79,10 @@ def train_model(X, y):
 
 if __name__ == '__main__':
     print('Entering training.....')
-    total_features_pos, y_pos = extract_features()
+    #extract features from two csv files
+    total_features_pos, y_pos = extract_features('training_set.csv')
     total_features_neg, y_neg = extract_noise()
+    
     #combine data
     y = np.append(y_pos, y_neg)
     X = np.vstack((total_features_pos, total_features_neg))
@@ -92,10 +94,16 @@ if __name__ == '__main__':
 
     #train model
     trained_model = train_model(X,y)
+
+    #create validation set data
+    cv_x, cv_y = extract_features('cv_set.csv')
+    print(len(cv_y))
+    cv_x = np.vstack((cv_x, total_features_neg))
+    cv_y = np.append(cv_y, y_neg)
     
-    #predict model
-    predictions = trained_model.predict(X)
-    print(confusion_matrix(y, predictions))
+    #Predice on model
+    predictions = trained_model.predict(cv_x)
+    print(confusion_matrix(cv_y, predictions))
 
 
 

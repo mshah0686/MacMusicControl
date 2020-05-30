@@ -39,7 +39,7 @@ def captureSerialData():
 if __name__ == '__main__':
     accData = captureSerialData()
     plt.plot(accData)
-    np.savetxt('randomNoise.csv', accData, delimiter=',', fmt='%d')
+    np.savetxt('test_set.csv', accData, delimiter=',', fmt='%d')
     plt.show()
 
 
