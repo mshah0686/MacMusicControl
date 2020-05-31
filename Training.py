@@ -75,11 +75,15 @@ def train_model(X, y):
 
 #given a set of features, return a prediction
 def predict(features):
+    global trained_model
     return trained_model.predict(features)
 
+global trained_model
 trained_model = RandomForestClassifier()
+
 #Extract features and return a trained model
 def train():
+    global trained_model
     print('Entering training.....')
     #extract features from two csv files
     total_features_pos, y_pos = extract_features('training_set.csv')
@@ -89,12 +93,14 @@ def train():
     y = np.append(y_pos, y_neg)
     X = np.vstack((total_features_pos, total_features_neg))
     #randomize data
+    print('Pre-proc: getting training features...')
     data = np.hstack((X, np.reshape(y, (-1,1))))
     np.random.shuffle(data)
     y = data[:,-1]
     X = data[:, :-1]
 
     #train model
+    print('Training model...')
     trained_model = train_model(X,y)
 
     #create validation set data
@@ -104,10 +110,9 @@ def train():
     cv_y = np.append(cv_y, y_neg)
     
     #Predice on model
+    print('Validation scores....')
     predictions = trained_model.predict(cv_x)
     print(confusion_matrix(cv_y, predictions))
-    
-    return trained_model
-
+    print('Finished training....')
 
 
