@@ -13,6 +13,7 @@ from sklearn.ensemble import RandomForestClassifier
 import serial
 import time
 import matplotlib.pyplot as plt
+import Music as controller
 
 #create buffer full interupt event
 buffer_full = Event()
@@ -61,10 +62,14 @@ def analyze():
         prediction = predict(features.reshape(1, -1))
         if(prediction[0] == 1):
             print('Gesture Detected: Left Down')
+            controller.pause_play()
             #if you detect a gester, clear buffer fully 
             #To prevent multiple detections on one gesture
             samples_done = 0
         buffer_full.clear()
+
+#init music
+controller.init_music()
 
 #train model
 train()
