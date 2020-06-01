@@ -31,7 +31,7 @@ samples_done = 0
 
 def take_input():
     print('Started reading real time....')
-    global sample, accX, accY, accZ, buffer_size, samples_done, buffer
+    global accX, accY, accZ, buffer_size, samples_done, buffer
     port = '/dev/tty.usbmodem1422'
     input = serial.Serial(port,115200)
     input.flushInput()
