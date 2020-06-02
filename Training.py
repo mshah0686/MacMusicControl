@@ -14,8 +14,6 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
 noise = np.genfromtxt('TrainingData/random_noise.csv', delimiter = ',')
-left_data = np.genfromtxt('TrainingData/left_down.csv', delimiter = '.')
-right_data = np.genfromtxt('TrainingData/right_down.csv', delimiter = '.')
 
 total_features = []
 
@@ -29,6 +27,9 @@ def extract_features(file_name, gesture, classification):
     elif gesture == 'right':
         #flip signal to find peaks for right down gesture
         peaks,_ = sig.find_peaks(-data[:,1], height = 7.5)
+    elif gesture == 'up':
+        #look at x axis for up flicks
+        peaks,_ = sig.find_peaks(data[:,0], height = 7.5)
 
     for peak in peaks:
         #f is the sub frame of the peak (certain parameter left and right of it)
@@ -92,11 +93,12 @@ def train():
 
     features_left, y_left = extract_features('TrainingData/left_down.csv', 'left', 1)
     features_right, y_right = extract_features('TrainingData/right_down.csv', 'right', 2)
+    features_up, y_up = extract_features('TrainingData/flick_up.csv', 'up', 3)
     features_noise, y_noise = extract_noise()
 
     #combine data
-    y = np.vstack(( y_left.reshape(-1,1) , y_right.reshape(-1, 1) , y_noise.reshape(-1, 1)))
-    X = np.vstack((features_left, features_right, features_noise))
+    y = np.vstack(( y_left.reshape(-1,1) , y_right.reshape(-1, 1) , y_up.reshape(-1, 1), y_noise.reshape(-1, 1)))
+    X = np.vstack((features_left, features_right, features_up, features_noise))
     #randomize data
     print('Pre-proc: getting training features...')
     data = np.hstack((X, y))

@@ -68,6 +68,10 @@ def analyze():
             samples_done = 0
         elif(prediction[0] == 2):
             print('Gesture Detected: Right Down')
+            controller.previous()
+            samples_done = 0
+        elif(prediction[0] == 3):
+            print('Gesture Detected: Up Flick')
             controller.pause_play()
             samples_done = 0
         buffer_full.clear()
