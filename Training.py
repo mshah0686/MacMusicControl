@@ -9,6 +9,7 @@ import numpy as np
 import scipy.signal as sig
 import scipy.stats as stat
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import svm
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
@@ -83,7 +84,8 @@ global trained_model
 #Extract features and return a trained model
 def train():
     global trained_model
-    trained_model = RandomForestClassifier()
+    #trained_model = RandomForestClassifier(n_estimators=200)
+    trained_model = svm.SVC()
     print('Entering training.....')
     #extract features from two csv files
     #extract features on :1 but peaks are negative
