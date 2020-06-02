@@ -62,9 +62,13 @@ def analyze():
         prediction = predict(features.reshape(1, -1))
         if(prediction[0] == 1):
             print('Gesture Detected: Left Down')
-            controller.pause_play()
+            controller.next()
             #if you detect a gester, clear buffer fully 
             #To prevent multiple detections on one gesture
+            samples_done = 0
+        elif(prediction[0] == 2):
+            print('Gesture Detected: Right Down')
+            controller.pause_play()
             samples_done = 0
         buffer_full.clear()
 

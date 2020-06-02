@@ -12,26 +12,26 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
 
-noise = np.genfromtxt('randomNoise.csv', delimiter = ',')
-#xyz -> 0 1 2
-#peaks,_ = sig.find_peaks(left_movement[:,1], height = 7.5)
-#plt.figure(num=1)
-#plt.plot(left_movement[:,1])
-#plt.figure(num = 1)
-#plt.plot(peaks, left_movement[peaks,1], 'x')
-#plt.show()
-
+noise = np.genfromtxt('TrainingData/random_noise.csv', delimiter = ',')
+left_data = np.genfromtxt('TrainingData/left_down.csv', delimiter = '.')
+right_data = np.genfromtxt('TrainingData/right_down.csv', delimiter = '.')
 
 total_features = []
 
-def extract_features(file_name):
-    left_movement = np.genfromtxt(file_name, delimiter=',')
+def extract_features(file_name, gesture, classification):
+    data = np.genfromtxt(file_name, delimiter=',')
     total_features = []
     print('Extracting features')
-    peaks,_ = sig.find_peaks(left_movement[:,1], height = 7.5)
+    if gesture == 'left':
+        #find peaks in signal
+        peaks,_ = sig.find_peaks(data[:,1], height = 7.5)
+    elif gesture == 'right':
+        #flip signal to find peaks for right down gesture
+        peaks,_ = sig.find_peaks(-data[:,1], height = 7.5)
+
     for peak in peaks:
         #f is the sub frame of the peak (certain parameter left and right of it)
-        frame = left_movement[peak-30:peak+45, :]
+        frame = data[peak-30:peak+45, :]
         frame_var = np.var(frame, axis = 0)
         frame_skew = stat.skew(frame, axis = 0)
         frame_kurt = stat.kurtosis(frame, axis = 0)
@@ -41,8 +41,8 @@ def extract_features(file_name):
             total_features = features
         else:
             total_features = np.vstack((total_features, features))
-    #classify positive as 1
-    y = np.ones(len(peaks))
+    #classify left as 1 and right as 2
+    y = np.ones(len(peaks)) * classification
     return total_features, y
 
 def extract_noise():
@@ -79,22 +79,25 @@ def predict(features):
     return trained_model.predict(features)
 
 global trained_model
-trained_model = RandomForestClassifier()
 
 #Extract features and return a trained model
 def train():
     global trained_model
+    trained_model = RandomForestClassifier()
     print('Entering training.....')
     #extract features from two csv files
-    total_features_pos, y_pos = extract_features('training_set.csv')
-    total_features_neg, y_neg = extract_noise()
+    #extract features on :1 but peaks are negative
+
+    features_left, y_left = extract_features('TrainingData/left_down.csv', 'left', 1)
+    features_right, y_right = extract_features('TrainingData/right_down.csv', 'right', 2)
+    features_noise, y_noise = extract_noise()
 
     #combine data
-    y = np.append(y_pos, y_neg)
-    X = np.vstack((total_features_pos, total_features_neg))
+    y = np.vstack(( y_left.reshape(-1,1) , y_right.reshape(-1, 1) , y_noise.reshape(-1, 1)))
+    X = np.vstack((features_left, features_right, features_noise))
     #randomize data
     print('Pre-proc: getting training features...')
-    data = np.hstack((X, np.reshape(y, (-1,1))))
+    data = np.hstack((X, y))
     np.random.shuffle(data)
     y = data[:,-1]
     X = data[:, :-1]
@@ -104,15 +107,16 @@ def train():
     trained_model = train_model(X,y)
 
     #create validation set data
-    cv_x, cv_y = extract_features('cv_set.csv')
-    print(len(cv_y))
-    cv_x = np.vstack((cv_x, total_features_neg))
-    cv_y = np.append(cv_y, y_neg)
+    #cv_x, cv_y = extract_features('cv_set.csv')
+    #print(len(cv_y))
+    #cv_x = np.vstack((cv_x, total_features_neg))
+    #cv_y = np.append(cv_y, y_neg)
     
     #Predice on model
     print('Validation scores....')
-    predictions = trained_model.predict(cv_x)
-    print(confusion_matrix(cv_y, predictions))
+    predictions = trained_model.predict(X)
+    print(confusion_matrix(y, predictions))
     print('Finished training....')
 
-
+if __name__ == '__main__':
+    train()
