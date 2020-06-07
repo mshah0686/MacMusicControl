@@ -9,4 +9,4 @@ Hexiwear is an IOT wearable device with a multitude of sensors and BLE suppurt. 
 # Data Gathering
 First, the Data folder holds various CSV for different gestures and random noise. The three gestures are flicking your wrist right, left, and up. The random noise was used to train the model to prevent false positives and true negatives. Here are some XYZ acceleration graphs for different gestures showing that the gestures can be distinguished using the XYZ acceleration data (specifically the y axis for left and right and X axis for flick up).
 
-![alt text](https://github.com/mshah06686/MacMusicControl/blob/master/Documentation/Left_down.png?raw=true)
+![alt text](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Left_down.png)
