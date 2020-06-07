@@ -11,7 +11,7 @@ The Hexiwear was programed to send XYZ data at 100Hz over serial (done in Python
 
 First, the Data folder holds various CSV for different gestures and random noise. The three gestures are flicking your wrist right, left, and up. The random noise was used to train the model to prevent false positives and true negatives. Here are some XYZ acceleration graphs for different gestures showing that the gestures can be distinguished using the XYZ acceleration data (specifically the y axis for left and right and X axis for flick up). The other gesture graphs are in the Documentation folder.
 
-Left Down: You can see the peaks that occur on multiple gesture perfomances. The <Training.py> or <TrainSaveModel.py> script finds those peaks and uses them as frames as training data.
+Left Down: You can see the peaks that occur on multiple gesture perfomances. The 'Training.py' or <TrainSaveModel.py> script finds those peaks and uses them as frames as training data.
 ![alt text](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Left_down.png)
 
 Random Noise: A sliding frame was used to capture these as negative (no gestures)
