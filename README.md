@@ -4,7 +4,7 @@ Gesture recognition using Hexiwear, a wearable IOT device. Classify different wr
 # Intro
 My music control keys on my laptop broke so it's annoying to change music by changing apps while working.Instead, I wanted to build something cool instead.
 
-Hexiwear is an IOT wearable device with a multitude of sensors and BLE suppurt. The project captures the XYZ acceleration, predicts gestures using `sklearn` libraries, and controls music with Apple OSA scripting.
+Hexiwear is an IOT wearable device with a multitude of sensors and BLE support. The project captures the XYZ acceleration, predicts gestures using `sklearn` libraries, and controls music with Apple OSA scripting.
 
 # Data Gathering
 The Hexiwear was programed to send XYZ data at 100Hz over serial (done in Python which is super cool for an embedded system.)
