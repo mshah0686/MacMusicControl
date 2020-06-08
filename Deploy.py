@@ -12,7 +12,7 @@ from threading import Event
 from sklearn.ensemble import RandomForestClassifier
 import serial
 import time
-import matplotlib.pyplot as plt
+import matplotlib as plt
 import Music as controller
 
 #create buffer full interupt event
