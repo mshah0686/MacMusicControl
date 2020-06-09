@@ -9,6 +9,10 @@ Hexiwear is an IOT wearable device with a multitude of sensors and BLE support. 
 # Prototype
 Here's the rough prototype in development phase. Flick left is next song, right is previous, and up is pause/play.
 ![Protoype Demo](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Prototype_gif.gif)
+
+# Update: Iteration 2:
+Because my laptop cannot support BLE 4.1, I decided on a workaround. I connected the Hexiwear to the Raspberry Pi which handled all the analysis and music control using 'raspotify'. Then because spotify is connected accross devices, music changes on the Raspberry Pi changes music on my computer.
+
 # Development Process:
 ## Data Gathering
 The Hexiwear was programed to send XYZ data at 100Hz over serial (done in Python which is super cool for an embedded system.)
@@ -37,7 +41,8 @@ To make this work, I ordered a bluetooth dongle which is coming from China. In t
 In terms of random noise, there were very few true negatives while usage. This is probably because the training was done on a full 90 degree wrist flick which you usually don't do while working on the laptop. And, I used random noise data in the training which helped reduce false positives.
 
 
-
+# Edit: 
+I solved the BLE support problem using a Raspberry Pi as explained above.
 
 
 
