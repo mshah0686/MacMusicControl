@@ -11,7 +11,7 @@ Here's the rough prototype in development phase. Flick left is next song, right 
 ![Protoype Demo](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Prototype_gif.gif)
 
 # Update: Iteration 2:
-Because my laptop cannot support BLE 4.1, I decided on a workaround. I connected the Hexiwear to the Raspberry Pi which handled all the analysis and music control using 'raspotify'. Then because spotify is connected accross devices, music changes on the Raspberry Pi changes music on my computer.
+Because my laptop cannot support BLE 4.1, I decided on a workaround. I connected the Hexiwear to the Raspberry Pi which handled all the analysis and music control using `raspotify`. Then because spotify is connected accross devices, music changes on the Raspberry Pi changes music on my computer.
 
 # Development Process:
 ## Data Gathering
