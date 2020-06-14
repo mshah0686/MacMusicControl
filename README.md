@@ -7,7 +7,8 @@ My music control keys on my laptop broke so it's annoying to change music by cha
 Hexiwear is an IOT wearable device with a multitude of sensors and BLE support. The project captures the XYZ acceleration, predicts gestures using `sklearn` libraries, and controls music with Apple OSA scripting.
 
 # Prototype
-Here's the rough prototype in development phase. Flick left is next song, right is previous, and up is pause/play.
+Here's the rough prototype in development phase. Flick left is next song, right is previous, and up is pause/play. You can see the spotify music changing (and pause/play) in the right side of the laptop screen.
+
 ![Protoype Demo](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Prototype_gif.gif)
 
 # Update: Iteration 2:
