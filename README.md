@@ -11,8 +11,6 @@ Here's the rough prototype in development phase. Flick left is next song, right 
 
 ![Protoype Demo](https://github.com/mshah0686/MacMusicControl/blob/master/Documentation/Prototype_gif.gif)
 
-# Update: Iteration 2:
-Because my laptop cannot support BLE 4.1, I decided on a workaround. I connected the Hexiwear to the Raspberry Pi which handled all the analysis and music control using `raspotify`. Then because spotify is connected accross devices, music changes on the Raspberry Pi changes music on my computer.
 
 # Development Process:
 ## Data Gathering
@@ -36,14 +34,13 @@ As XYZ data comes into the serial port in realtime on one thread, a buffer imple
 
 The next step was to make it wireless. This is where I ran into trouble. I couldn't find a way to port the models and `sklearn` libraries into the Hexiwear device, so instead I opted for BLE communication from Hexiwear to the laptop. But then realized that my laptop doesn't support Bluetooth 4.1....dissapointing
 
-# Current/Further work
+# Problems and Further work
 To make this work, I ordered a bluetooth dongle which is coming from China. In the meantime, I use it tethered to the laptop via usb cable. I found that it detects some false positives when the wrist moves back to flat position from either right or left because the acceleration data starts to look familiar to the opposite gesture. The solution I found was the empty the buffer fully for a few more samples after a gesture was detected so it ignores the next few milliseconds of data that would otherwise be detected as a false positive.
 
 In terms of random noise, there were very few true negatives while usage. This is probably because the training was done on a full 90 degree wrist flick which you usually don't do while working on the laptop. And, I used random noise data in the training which helped reduce false positives.
 
-
-# Edit: 
-I solved the BLE support problem using a Raspberry Pi as explained above.
+# Update: Iteration 2:
+Because my laptop cannot support BLE 4.1, I decided on a workaround. I connected the Hexiwear to the Raspberry Pi which handled all the analysis and music control using `raspotify`. Then because spotify is connected accross devices, music changes on the Raspberry Pi changes music on my computer.
 
 
 
